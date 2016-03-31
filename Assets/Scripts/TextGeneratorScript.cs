@@ -28,32 +28,33 @@ public class TextGeneratorScript : MonoBehaviour {
         {
             if (transform.childCount < maxTextOnScreen)
             {
-                GameObject newText = (GameObject)Instantiate(textGameObject);
-                newText.transform.SetParent(this.transform);
-                newText.transform.localScale = new Vector3 (1,1,1);
+                GameObject newText = (GameObject) Instantiate(textGameObject);
+                newText.transform.SetParent(transform);
+                newText.transform.localScale = new Vector3 (1, 1, 1);
                 newText.transform.position = new Vector3(Random.Range(10, Screen.width - 150), Screen.height);
             }
             curTime = 0;
         }
+    }
+
+    public void cek()
+    {
         //destroy kalo ada kata di layar yang bener
-        if (Input.GetKeyDown("space")) //nanti inputnya diganti sama myo ngepal
+        bool isMatch = false;
+        for (int i = 0; i < transform.childCount; i++)
         {
-            bool isMatch=false;
-            for (int i = 0; i < transform.childCount; i++)
+            if (transform.GetChild(i).GetComponent<TextBehavior>().textRemaining == "")
             {
-                if (transform.GetChild(i).GetComponent<TextBehavior>().textRemaining == "")
-                {
-                    Debug.Log("beneeeer");
-                    transform.GetChild(i).GetComponent<TextBehavior>().destroy();
-                    transform.parent.FindChild("InputText").GetComponent<Text>().text = "";
-                    isMatch = true;
-                    break;
-                }
+                Debug.Log("beneeeer");
+                transform.GetChild(i).GetComponent<TextBehavior>().destroy();
+                transform.parent.FindChild("InputText").GetComponent<Text>().text = "";
+                isMatch = true;
+                break;
             }
-            if (!isMatch)
-            {
-                Debug.Log("salaaaah");
-            }
+        }
+        if (!isMatch)
+        {
+            Debug.Log("salaaaah");
         }
     }
 }
