@@ -60,7 +60,10 @@
      <Compile Include="Assets\Myo\Scripts\ThalmicMyo.cs" />
      <Compile Include="Assets\Scripts\AlphabetInputListener.cs" />
      <Compile Include="Assets\Scripts\DancematController.cs" />
+     <Compile Include="Assets\Scripts\HeartManager.cs" />
      <Compile Include="Assets\Scripts\LevelLoader.cs" />
+     <Compile Include="Assets\Scripts\MenuScript.cs" />
+     <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\TextBehavior.cs" />
      <Compile Include="Assets\Scripts\TextGeneratorScript.cs" />
      <None Include="Assets\Resources\Level_1.txt" />

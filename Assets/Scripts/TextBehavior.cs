@@ -21,7 +21,7 @@ public class TextBehavior : MonoBehaviour {
         //entar bikin aja gameobject baru buat load dictionary biar gampang, jadi load dictionary baru kalo ganti level aja
 
         // load soal
-        textDict = LevelLoader.getDict(1);
+        textDict = LevelLoader.getDict(2);
 
         // random soal
         text = textDict[Random.Range(0, textDict.Count)];
@@ -43,7 +43,8 @@ public class TextBehavior : MonoBehaviour {
         if (transform.position.y < -0.5f*(transform.FindChild("Highlighted").GetComponent<RectTransform>().rect.height))
         {
             // Debug.Log("health minus!");
-            Destroy(transform.gameObject);
+            HeartManager.decrement();
+            destroy();
         }
 
         //ngatur highlight
@@ -97,6 +98,6 @@ public class TextBehavior : MonoBehaviour {
     
     public void destroy()
     {
-        Destroy(transform.gameObject);
+        Destroy(gameObject);
     }
 }

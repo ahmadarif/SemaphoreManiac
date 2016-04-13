@@ -45,7 +45,8 @@ public class TextGeneratorScript : MonoBehaviour {
         {
             if (transform.GetChild(i).GetComponent<TextBehavior>().textRemaining == "")
             {
-                Debug.Log("beneeeer");
+                //Debug.Log("beneeeer");
+                ScoreManager.increment(10);
                 transform.GetChild(i).GetComponent<TextBehavior>().destroy();
                 transform.parent.FindChild("InputText").GetComponent<Text>().text = "";
                 isMatch = true;
@@ -54,7 +55,8 @@ public class TextGeneratorScript : MonoBehaviour {
         }
         if (!isMatch)
         {
-            Debug.Log("salaaaah");
+            //Debug.Log("salaaaah");
+            HeartManager.decrement();
         }
     }
 }

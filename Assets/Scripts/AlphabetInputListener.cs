@@ -6,6 +6,7 @@ using Thalmic.Myo;
 public class AlphabetInputListener : MonoBehaviour {
     
     public int maxStringLength;
+    public bool isUseKeyboard = true;
 
     private DancematController danceMat;
     private ThalmicMyo myo = null;
@@ -22,14 +23,33 @@ public class AlphabetInputListener : MonoBehaviour {
     
     void Start () 
     {
-        danceMat = GetComponent<DancematController>();
-        myo = GameObject.Find("Myo").GetComponent<ThalmicMyo>();
+        if (!isUseKeyboard)
+        {
+            danceMat = GetComponent<DancematController>();
+            myo = GameObject.Find("Myo").GetComponent<ThalmicMyo>();
+        }
+
+
         inputText = GetComponent<Text>();
         textGenerator = transform.parent.FindChild("TextGenerator").GetComponent<TextGeneratorScript>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
+    {
+        if (!isUseKeyboard)
+        {
+            danceMatAction();
+            myoAction();
+        }
+        else
+        {
+            keyboardAction();
+        }
+
+    }
+
+    private void danceMatAction()
     {
         // input huruf dari Dancemat
         if (danceMat.huruf == "")
@@ -55,7 +75,10 @@ public class AlphabetInputListener : MonoBehaviour {
                 }
             }
         } //> input huruf dari Dancemat
+    }
 
+    private void myoAction()
+    {
         // hapus karakter menggunakan pose WaveIn
         if (myo.pose == Pose.Unknown || myo.pose == Pose.Rest)
         {
@@ -91,35 +114,38 @@ public class AlphabetInputListener : MonoBehaviour {
                 }
             }
         } //> hapus karakter menggunakan pose WaveIn
+    }
 
-        /*
+    private void keyboardAction()
+    {
         //listen input keyboard trus ngubah string di input sesuai dengan inputan
         foreach (char c in Input.inputString)
         {
-            if (c == '\b')
+            if (c == '\b') // delete or backspace
             {
                 //delete char
                 if (GetComponent<Text>().text.Length > 0)
                 {
-                    GetComponent<Text>().text = GetComponent<Text>().text.Substring(0, GetComponent<Text>().text.Length - 1);
+                    inputText.text = inputText.text.Substring(0, inputText.text.Length - 1);
                 }
             }
-            else if (c == '\n' || c == '\r')
+            else if (c == '\n' || c == '\r') // enter
             {
                 //trigger action
                 Debug.Log("Hai");
-                GetComponent<Text>().text = "";
+                textGenerator.cek();
+                inputText.text = "";
             }
-            else if (GetComponent<Text>().text.Length < maxStringLength)
+
+            // append char
+            if (inputText.text.Length < maxStringLength)
             {
-                //append char
-                if (c >= 'a' && c <= 'z')
+                if (c >= 'a' && c <= 'z') 
                 {
-                    GetComponent<Text>().text += c;
-                    GetComponent<Text>().text = GetComponent<Text>().text.ToUpper();
+                    inputText.text += c;
+                    inputText.text = inputText.text.ToUpper();
                 }
             }
         }
-         * */
     }
 }
